@@ -5,7 +5,11 @@ import 'package:personalexpensesapp/widgets/new_transaction.dart';
 import 'package:personalexpensesapp/widgets/transaction_list.dart';
 import 'models/transaction.dart';
 
-void main() => runApp(MyApp());
+void main() {
+//  SystemChrome.setPreferredOrientations(
+//      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -17,14 +21,14 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.indigoAccent,
           fontFamily: 'Quicksand',
           textTheme: ThemeData.light().textTheme.copyWith(
-              title: TextStyle(
+              headline6: TextStyle(
                   fontFamily: 'OpenSans',
                   fontSize: 18,
                   fontWeight: FontWeight.bold),
               button: TextStyle(color: Colors.white)),
           appBarTheme: AppBarTheme(
               textTheme: ThemeData.light().textTheme.copyWith(
-                    title: TextStyle(
+                    headline6: TextStyle(
                         fontFamily: 'OpenSans',
                         fontSize: 20,
                         fontWeight: FontWeight.bold),
@@ -85,28 +89,39 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Personal Expenses App',
-          style: TextStyle(fontFamily: 'Open Sans'),
-        ),
-        elevation: 5,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              _startAddNewTransaction(context);
-            },
-          )
-        ],
+    final appBar = AppBar(
+      title: Text(
+        'Personal Expenses App',
+        style: TextStyle(fontFamily: 'Open Sans'),
       ),
+      elevation: 5,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () {
+            _startAddNewTransaction(context);
+          },
+        )
+      ],
+    );
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(_userTransactions,_deleteTransactions),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        (appBar.preferredSize.height +
+                            MediaQuery.of(context).padding.top)) *
+                    0.4,
+                child: Chart(_recentTransactions)),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        (appBar.preferredSize.height +
+                            MediaQuery.of(context).padding.top)) *
+                    0.6,
+                child: TransactionList(_userTransactions, _deleteTransactions)),
           ],
         ),
       ),
